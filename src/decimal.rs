@@ -1981,7 +1981,17 @@ impl FromStr for Decimal {
     type Err = Error;
 
     fn from_str(value: &str) -> Result<Decimal, Self::Err> {
-        crate::str::parse_str_radix_10(value)
+        match crate::str::parse_str_radix_10(value){
+		Ok(d) => Ok(d),
+
+		Err(e) => {
+			if value.contains('e') || value.contains("E") {
+				Decimal::from_scientific(value)
+			} else{
+				Err(e)
+			}
+		}
+	}
     }
 }
 

@@ -122,6 +122,18 @@ fn it_parses_big_float_string() {
 }
 
 #[test]
+fn it_parses_scientific_string(){
+    let a = Decimal::from_str("1.23e4").unwrap();
+    assert_eq!("12300", a.to_string());
+}
+
+#[test]
+fn it_parses_scientific_negative_exponent_string(){
+    let a = Decimal::from_str("6.7e-1").unwrap();
+    assert_eq!("0.67", a.to_string());
+}
+
+#[test]
 fn it_can_serialize_deserialize() {
     let tests = [
         "12.3456789",
